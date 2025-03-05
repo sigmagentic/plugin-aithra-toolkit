@@ -1,0 +1,8 @@
+node_modules
+elizaConfig.yaml
+custom_actions/
+cache/
+.env
+.DS_Store
+
+.dist

@@ -1,0 +1,50 @@
+{
+  "name": "@aithranetwork/plugin-aithra-toolkit",
+  "version": "0.0.5",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "@elizaos/source": "./src/index.ts",
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "assets",
+    "README.md",
+    "package.json"
+  ],
+  "dependencies": {
+    "@aithranetwork/sdk-aithra-toolkit": "0.0.6",
+    "@elizaos/core": "0.1.9",
+    "@solana/spl-token": "^0.4.12",
+    "@solana/web3.js": "1.95.8",
+    "bs58": "^6.0.0",
+    "reflect-metadata": "^0.2.2",
+    "replicate": "^1.0.1",
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "8.3.5"
+  },
+  "scripts": {
+    "preinstall:stable": "node -e \"const p=require('./package.json');require('child_process').exec('npm view @elizaos/core versions --json',(e,o)=>{const v=JSON.parse(o).filter(v=>!v.includes('alpha')&&!v.includes('beta')).pop();p.dependencies['@elizaos/core']=v;require('fs').writeFileSync('./package.json',JSON.stringify(p,null,2))});\"",
+    "preinstall:develop": "node -e \"const p=require('./package.json');require('child_process').exec('npm view @elizaos/core versions --json',(e,o)=>{const v=JSON.parse(o).pop();p.dependencies['@elizaos/core']=v;require('fs').writeFileSync('./package.json',JSON.stringify(p,null,2))});\"",
+    "build:stable": "tsup --format esm --dts",
+    "build:develop": "tsup --format esm --dts",
+    "dev": "tsup --format esm --dts --watch",
+    "lint": "biome check src/",
+    "lint:fix": "biome check --apply src/",
+    "format": "biome format src/",
+    "format:fix": "biome format --write src/",
+    "test": "vitest run"
+  }
+}
